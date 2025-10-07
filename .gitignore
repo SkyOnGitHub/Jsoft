@@ -10,11 +10,6 @@
 *.userosscache
 *.sln.docstates
 
-# User-specific folders
-bin
-obj
-packages
-
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -365,4 +360,4 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
-FodyWeavers.xsd
+FodyWeavers.xsdobj/
