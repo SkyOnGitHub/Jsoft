@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jsoft", "Jsoft\Jsoft.csproj", "{12D9BFDD-9C07-474B-84C9-D6FD30BB1F9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jsoft.Tests", "Jsoft.Tests\Jsoft.Tests.csproj", "{A7736348-B2B9-4CDD-B8E5-27847B892577}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{12D9BFDD-9C07-474B-84C9-D6FD30BB1F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12D9BFDD-9C07-474B-84C9-D6FD30BB1F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D9BFDD-9C07-474B-84C9-D6FD30BB1F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7736348-B2B9-4CDD-B8E5-27847B892577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7736348-B2B9-4CDD-B8E5-27847B892577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7736348-B2B9-4CDD-B8E5-27847B892577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7736348-B2B9-4CDD-B8E5-27847B892577}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
