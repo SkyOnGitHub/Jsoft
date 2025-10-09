@@ -17,22 +17,13 @@ namespace Jsoft
         /// <typeparam name="TValue">The type of Twitch API data transfer object to convert from JSON.</typeparam>
         /// <returns>The new <see cref="TValue"/> instance.</returns>
         /// <exception cref="JsonException">Unable to parse <typeparamref name="TValue"/> from JSON.</exception>
-        protected static TValue Parse< TValue >( string json, JsonSerializerOptions options )
+        public static TValue Parse< TValue >( string json, JsonSerializerOptions options = default )
         where TValue : TwitchDto
         {
             var typeToConvert = typeof(TValue);
             var deserialized  = JsonSerializer.Deserialize(json, typeToConvert, options) ?? throw new JsonException($"Unable to parse type '{typeToConvert}'.");
             return (TValue)deserialized;
         }
-        
-        /// <summary>
-        /// Parses the supplied JSON into a new instance of the <see cref="TwitchDto"/> class using the specified <paramref name="options"/>.
-        /// </summary>
-        /// <param name="json">The JSON string to parse into a new instance of <see cref="TwitchDto"/>.</param>
-        /// <param name="options">An object that specifies serialization options to use.</param>
-        /// <returns>The new <see cref="TwitchDto"/> instance.</returns>
-        public static TwitchDto Parse( string json, JsonSerializerOptions options = default )
-            => Parse<TwitchDto>(json, options);
         
         /// <summary>
         /// Returns the JSON representation of the current instance using the specified <paramref name="options"/>.
