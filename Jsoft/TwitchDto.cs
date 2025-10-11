@@ -9,6 +9,29 @@ namespace Jsoft
     [PublicAPI]
     public abstract class TwitchDto
     {
+        /// <inheritdoc />
+        public override bool Equals( object obj )
+        {
+            var typeToConvert = obj.GetType();
+            var json = JsonSerializer.Serialize(obj, typeToConvert);
+            return this.Equals(json);
+        }
+        
+        /// <summary>
+        /// Determines whether the specified JSON is equal to the current object's JSON representation.
+        /// </summary>
+        /// <param name="json">The JSON to compare with the current object's JSON representation.</param>
+        /// <returns>
+        /// <see langword="true"/> if the specified JSON is equal to the current object's JSON representation;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
+        public bool Equals( string json )
+            => this.ToJson().Equals(json);
+        
+        /// <inheritdoc />
+        public override int GetHashCode()
+            => this.ToJson().GetHashCode();
+        
         /// <summary>
         /// Parses the supplied JSON into a new instance of <see cref="TValue"/>.
         /// </summary>
