@@ -5,7 +5,7 @@ namespace Jsoft.Tests;
 internal abstract class TestsBase
 {
     [AssertionMethod]
-    private protected void deserializationTest< TValue >( TValue value, string json )
+    private protected static void assertDeserializable< TValue >( TValue value, string json )
     where TValue : TwitchDto
     {
         // Act
@@ -16,7 +16,7 @@ internal abstract class TestsBase
     }
     
     [AssertionMethod]
-    private protected void serializationTest< TValue >( TValue value, string json )
+    private protected static void assertSerializable< TValue >( TValue value, string json )
     where TValue : TwitchDto
     {
         // Act
