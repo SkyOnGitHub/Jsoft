@@ -26,11 +26,11 @@ namespace Jsoft
         /// otherwise, <see langword="false"/>.
         /// </returns>
         public bool Equals( string json )
-            => this.ToJson().Equals(json);
+            => this.ToString().Equals(json);
         
         /// <inheritdoc />
         public override int GetHashCode()
-            => this.ToJson().GetHashCode();
+            => this.ToString().GetHashCode();
         
         /// <summary>
         /// Parses the supplied JSON into a new instance of <see cref="TValue"/>.
@@ -51,17 +51,10 @@ namespace Jsoft
         /// Returns the JSON representation of the current instance.
         /// </summary>
         /// <returns>The JSON representation of the current instance.</returns>
-        public string ToJson()
+        public override string ToString()
         {
             var typeToConvert = this.GetType();
             return JsonSerializer.Serialize(this, typeToConvert);
         }
-        
-        /// <summary>
-        /// Returns the JSON representation of the current instance.
-        /// </summary>
-        /// <returns>The JSON representation of the current instance.</returns>
-        public override string ToString()
-            => this.ToJson();
     }
 }

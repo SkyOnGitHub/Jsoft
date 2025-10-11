@@ -20,7 +20,7 @@ internal abstract class TestsBase
     where TValue : TwitchDto
     {
         // Act
-        var actual = value.ToJson();
+        var actual = value.ToString();
         
         // Assert
         Assert.That(actual, Is.EqualTo(json));
