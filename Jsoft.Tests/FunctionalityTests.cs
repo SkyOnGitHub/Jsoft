@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 namespace Jsoft.Tests;
 
 internal partial class FunctionalityTests : TestsBase
