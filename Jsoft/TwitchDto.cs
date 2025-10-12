@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
 namespace Jsoft
@@ -9,11 +10,18 @@ namespace Jsoft
     [PublicAPI]
     public abstract class TwitchDto
     {
+        private static readonly JsonSerializerOptions options = new JsonSerializerOptions();
+        
+        static TwitchDto()
+        {
+            options.NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString | JsonNumberHandling.AllowNamedFloatingPointLiterals;
+        }
+        
         /// <inheritdoc />
         public override bool Equals( object obj )
         {
             var typeToConvert = obj.GetType();
-            var json = JsonSerializer.Serialize(obj, typeToConvert);
+            var json          = JsonSerializer.Serialize(obj, typeToConvert, options);
             return this.Equals(json);
         }
         
@@ -43,7 +51,7 @@ namespace Jsoft
         where TValue : TwitchDto
         {
             var typeToConvert = typeof(TValue);
-            var deserialized  = JsonSerializer.Deserialize(json, typeToConvert) ?? throw new JsonException($"Unable to parse type '{typeToConvert}'.");
+            var deserialized  = JsonSerializer.Deserialize(json, typeToConvert, options) ?? throw new JsonException($"Unable to parse type '{typeToConvert}'.");
             return (TValue)deserialized;
         }
         
@@ -54,7 +62,7 @@ namespace Jsoft
         public override string ToString()
         {
             var typeToConvert = this.GetType();
-            return JsonSerializer.Serialize(this, typeToConvert);
+            return JsonSerializer.Serialize(this, typeToConvert, options);
         }
     }
 }
