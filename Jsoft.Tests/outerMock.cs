@@ -8,6 +8,6 @@ internal partial class FunctionalityTests
     private protected class outerMock : TwitchDto
     {
         [JsonConverter(typeof(converterMock))]
-        public required baseMock Derived { get; set; }
+        public required baseMock Derived { get; init; }
     }
 }
