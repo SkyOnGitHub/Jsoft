@@ -42,6 +42,9 @@
       <Compile Update="outerMock.cs">
         <DependentUpon>FunctionalityTests.cs</DependentUpon>
       </Compile>
+      <Compile Update="enumMock.cs">
+        <DependentUpon>FunctionalityTests.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

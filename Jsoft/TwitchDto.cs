@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using JetBrains.Annotations;
+using Jsoft.Converters;
 
 namespace Jsoft
 {
@@ -19,8 +20,17 @@ namespace Jsoft
         
         static TwitchDto()
         {
+            Options.RespectNullableAnnotations = true;
+            
             Options.NumberHandling       = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString | JsonNumberHandling.AllowNamedFloatingPointLiterals;
             Options.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+            
+            foreach (
+                var converter in new JsonConverter[]{
+                    new StringDateTimeConverter(),
+                    new JsonStringEnumConverter(Options.PropertyNamingPolicy),
+                }
+            ) Options.Converters.Add(converter);
             
             Options.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
             Options.MakeReadOnly();

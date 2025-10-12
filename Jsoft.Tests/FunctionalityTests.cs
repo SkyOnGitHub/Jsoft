@@ -1,16 +1,43 @@
+using System.Text;
+
 namespace Jsoft.Tests;
 
 internal partial class FunctionalityTests : TestsBase
 {
-    private const string JSON = "{\"derived\":{\"value\":\"42\",\"name\":\"AnswerToEverything\"}}";
+    private const enumMock ENUM  = enumMock.Two;
+    private const string   NAME  = "AnswerToEverything";
+    private const int      VALUE = 42;
     
-    private static readonly outerMock value = new(){ Derived = new derivedMock{ Name = "AnswerToEverything", Value = 42 } };
+    private static readonly DateTime now = DateTime.UtcNow;
+    
+    private static readonly string json = new StringBuilder()
+                                          .Append('{')
+                                          .Append("\"derived\":")
+                                          .Append('{')
+                                          .Append("\"empty\":null,")
+                                          .Append($"\"enum\":\"{ENUM.ToString().ToLower()}\",")
+                                          .Append($"\"now\":\"{now.ToString(Globals.DateTimeFormat)}\",")
+                                          .Append($"\"value\":\"{VALUE}\",")
+                                          .Append($"\"name\":\"{NAME}\"")
+                                          .Append('}')
+                                          .Append('}')
+                                          .ToString();
+    
+    private static readonly outerMock value = new(){
+        Derived = new derivedMock{
+            Name  = NAME,
+            Empty = null,
+            Enum  = ENUM,
+            Now   = now,
+            Value = VALUE
+        }
+    };
     
     [Test]
     public void ParseTest()
-        => assertDeserializable(value, JSON);
+        => assertDeserializable(value, json);
     
     [Test]
     public void PrintTest()
-        => assertSerializable(value, JSON);
+        => assertSerializable(value, json);
 }
