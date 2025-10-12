@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using JetBrains.Annotations;
 
 namespace Jsoft
@@ -10,18 +11,24 @@ namespace Jsoft
     [PublicAPI]
     public abstract class TwitchDto
     {
-        private static readonly JsonSerializerOptions options = new JsonSerializerOptions();
+        /// <summary>
+        /// Gets the JSON serialization options to control the conversion behaviour.
+        /// </summary>
+        /// <returns>The JSON serialization options to control the conversion behaviour.</returns>
+        public static JsonSerializerOptions Options { get; } = new JsonSerializerOptions();
         
         static TwitchDto()
         {
-            options.NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString | JsonNumberHandling.AllowNamedFloatingPointLiterals;
+            Options.NumberHandling   = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString | JsonNumberHandling.AllowNamedFloatingPointLiterals;
+            Options.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
+            Options.MakeReadOnly();
         }
         
         /// <inheritdoc />
         public override bool Equals( object obj )
         {
             var typeToConvert = obj.GetType();
-            var json          = JsonSerializer.Serialize(obj, typeToConvert, options);
+            var json          = JsonSerializer.Serialize(obj, typeToConvert, Options);
             return this.Equals(json);
         }
         
@@ -51,7 +58,7 @@ namespace Jsoft
         where TValue : TwitchDto
         {
             var typeToConvert = typeof(TValue);
-            var deserialized  = JsonSerializer.Deserialize(json, typeToConvert, options) ?? throw new JsonException($"Unable to parse type '{typeToConvert}'.");
+            var deserialized  = JsonSerializer.Deserialize(json, typeToConvert, Options) ?? throw new JsonException($"Unable to parse type '{typeToConvert}'.");
             return (TValue)deserialized;
         }
         
@@ -62,7 +69,7 @@ namespace Jsoft
         public override string ToString()
         {
             var typeToConvert = this.GetType();
-            return JsonSerializer.Serialize(this, typeToConvert, options);
+            return JsonSerializer.Serialize(this, typeToConvert, Options);
         }
     }
 }
