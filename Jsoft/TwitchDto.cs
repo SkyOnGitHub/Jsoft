@@ -19,7 +19,9 @@ namespace Jsoft
         
         static TwitchDto()
         {
-            Options.NumberHandling   = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString | JsonNumberHandling.AllowNamedFloatingPointLiterals;
+            Options.NumberHandling       = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString | JsonNumberHandling.AllowNamedFloatingPointLiterals;
+            Options.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+            
             Options.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
             Options.MakeReadOnly();
         }
