@@ -53,7 +53,38 @@ namespace Jsoft
         /// otherwise, <see langword="false"/>.
         /// </returns>
         public bool Equals( string json )
-            => this.ToString().Equals(json);
+        {
+            var jsonDocument = JsonDocument.Parse(json);
+            return this.Equals(jsonDocument);
+        }
+        
+        /// <summary>
+        /// Determines whether the specified JSON document is equal to the current object's JSON representation.
+        /// </summary>
+        /// <param name="jsonDocument">The JSON document to compare with the current object's JSON representation.</param>
+        /// <returns>
+        /// <see langword="true"/> if the specified JSON document is equal to the current object's JSON representation;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
+        public bool Equals( JsonDocument jsonDocument )
+        {
+            var jsonElement = jsonDocument.RootElement;
+            return this.Equals(jsonElement);
+        }
+        
+        /// <summary>
+        /// Determines whether the specified JSON element is equal to the current object's JSON representation.
+        /// </summary>
+        /// <param name="jsonElement">The JSON element to compare with the current object's JSON representation.</param>
+        /// <returns>
+        /// <see langword="true"/> if the specified JSON element is equal to the current object's JSON representation;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
+        public bool Equals( JsonElement jsonElement )
+        {
+            var root = JsonDocument.Parse(this.ToString()).RootElement;
+            return JsonElement.DeepEquals(root, jsonElement);
+        }
         
         /// <inheritdoc />
         public override int GetHashCode()
