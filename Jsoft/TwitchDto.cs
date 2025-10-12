@@ -12,12 +12,6 @@ namespace Jsoft
     [PublicAPI]
     public abstract class TwitchDto
     {
-        /// <summary>
-        /// Gets the JSON serialization options to control the conversion behaviour.
-        /// </summary>
-        /// <returns>The JSON serialization options to control the conversion behaviour.</returns>
-        public static JsonSerializerOptions Options { get; } = new JsonSerializerOptions();
-        
         static TwitchDto()
         {
             Options.RespectNullableAnnotations = true;
@@ -35,6 +29,12 @@ namespace Jsoft
             Options.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
             Options.MakeReadOnly();
         }
+        
+        /// <summary>
+        /// Gets the JSON serialization options to control the conversion behaviour.
+        /// </summary>
+        /// <returns>The JSON serialization options to control the conversion behaviour.</returns>
+        public static JsonSerializerOptions Options { get; } = new JsonSerializerOptions();
         
         /// <inheritdoc />
         public override bool Equals( object obj )
