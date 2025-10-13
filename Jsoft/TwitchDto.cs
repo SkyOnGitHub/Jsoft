@@ -10,7 +10,7 @@ namespace Jsoft
     /// Represents the abstract base class for Twitch API data transfer objects.
     /// </summary>
     [PublicAPI]
-    public abstract class TwitchDto
+    public abstract class TwitchDto : ITwitchDto
     {
         static TwitchDto()
         {

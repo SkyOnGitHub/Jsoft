@@ -11,13 +11,15 @@ namespace Jsoft.Converters
     /// <typeparam name="TValue">The type of Twitch API data transfer object to convert to or from JSON.</typeparam>
     [PublicAPI]
     public abstract class TwitchDtoConverter< TValue > : JsonConverter<TValue>
-    where TValue : TwitchDto
+    where TValue : ITwitchDto
     {
+        private static Type genericType = typeof(TValue);
+        
         /// <inheritdoc />
         public override bool CanConvert( Type typeToConvert )
-            => canConvert(typeof(TValue), typeToConvert);
+            => typeToConvert.IsAbstract && isAssignable(typeToConvert);
         
-        private static bool canConvert( Type genericType, Type typeToConvert )
+        private static bool isAssignable( Type typeToConvert )
             => genericType.IsAssignableFrom(typeToConvert);
         
         /// <summary>
@@ -28,38 +30,17 @@ namespace Jsoft.Converters
         /// <returns>The type determined to be converted.</returns>
         protected abstract Type DetermineTypeToConvert( Utf8JsonReader reader, Type typeToConvert );
         
-        private static void ensureCanConvert( Type genericType, Type typeToConvert )
+        private static void ensureAssignable( Type typeToConvert )
         {
-            if (!canConvert(genericType, typeToConvert)) throw new JsonException($"Type '{typeToConvert}' must be assignable to type '{genericType}'.");
-        }
-        
-        private static void ensureNotAbstract( Type typeToConvert )
-        {
-            if (typeToConvert.IsAbstract) throw new JsonException($"Type '{typeToConvert}' must be non-abstract.");
-        }
-        
-        private static void ensureNotSealed( Type genericType )
-        {
-            if (genericType.IsSealed) throw new JsonException($"Type must be '{genericType}'.");
+            if (!isAssignable(typeToConvert)) throw new JsonException($"Type '{typeToConvert}' must be assignable to type '{genericType}'.");
         }
         
         /// <inheritdoc />
         [CanBeNull]
         public override TValue Read( ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options )
         {
-            var genericType = typeof(TValue);
-            
-            if (!genericType.Equals(typeToConvert)) {
-                ensureNotSealed(genericType);
-                ensureCanConvert(genericType, typeToConvert);
-            }
-            
-            if (!typeToConvert.IsSealed) {
-                typeToConvert = this.DetermineTypeToConvert(reader, typeToConvert);
-                ensureNotAbstract(typeToConvert);
-                ensureCanConvert(genericType, typeToConvert);
-            }
-            
+            typeToConvert = this.DetermineTypeToConvert(reader, typeToConvert);
+            ensureAssignable(typeToConvert);
             return (TValue)JsonSerializer.Deserialize(ref reader, typeToConvert, options);
         }
         
