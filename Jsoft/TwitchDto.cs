@@ -23,6 +23,7 @@ namespace Jsoft
                 var converter in new JsonConverter[]{
                     new StringDateTimeConverter(),
                     new JsonStringEnumConverter(Options.PropertyNamingPolicy),
+                    new TransportConverter()
                 }
             ) Options.Converters.Add(converter);
             

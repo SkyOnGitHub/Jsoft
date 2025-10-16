@@ -26,10 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DataTransferObjectTests\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="baseMock.cs">
         <DependentUpon>FunctionalityTests.cs</DependentUpon>
       </Compile>
